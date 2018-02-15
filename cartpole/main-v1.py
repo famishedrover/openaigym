@@ -29,6 +29,8 @@ import random
 from keras.layers import Dense
 from keras.models import Sequential
 from keras.optimizers import Adam
+import time
+from keras.models import load_model
 
 class DQNAgent :
 	def __init__ (self , state_size , action_size) :
@@ -73,6 +75,15 @@ class DQNAgent :
 			if self.epsilon > self.epsilon_min :
 				self.epsilon *= self.epsilon_decay
 
+	def save_model(self,epoch=''):
+		x = '-'.join(time.strftime('%d %h %HH %MM %SS').split(' '))
+		self.model.save(x+'-epoch'+epoch+'.h5')
+
+	def load_model(self,model_path):
+		self.model = load_model(model_path)
+
+
+
 game_verison = '1'
 
 
@@ -114,7 +125,9 @@ if __name__ == "__main__" :
 		else :
 			replay_batch_size = 64
 		agent.replay(replay_batch_size)
-
+		
+		if e%1000 == 0 :
+			agent.save_model(epoch = e)
 
 
 

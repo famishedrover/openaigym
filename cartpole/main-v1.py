@@ -77,7 +77,7 @@ class DQNAgent :
 
 	def save_model(self,epoch=''):
 		x = '-'.join(time.strftime('%d %h %HH %MM %SS').split(' '))
-		self.model.save(x+'-epoch'+epoch+'.h5')
+		self.model.save(x+'-epoch'+str(epoch)+'.h5')
 
 	def load_model(self,model_path):
 		self.model = load_model(model_path)
@@ -125,7 +125,7 @@ if __name__ == "__main__" :
 		else :
 			replay_batch_size = 64
 		agent.replay(replay_batch_size)
-		
+
 		if e%1000 == 0 :
 			agent.save_model(epoch = e)
 
